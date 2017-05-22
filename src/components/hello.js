@@ -43,6 +43,7 @@ class Hello extends Component {
             img.onload = function () {
                 console.log(that.state.slides[i].image);
                 that.handleImageLoad(that.state.slides[i].image, function () {
+                    that.setState({isShow: true});
                     that.state.isShow = 1;
                     return;
                 });
@@ -74,11 +75,11 @@ class Hello extends Component {
     return (
         <div>
             {names}
-            <div className="container">
+            {this.state.isShow ? <div className="container">
                 <Slider {...settings}>
                     {slides}
                 </Slider>
-            </div>
+            </div> : null}
         </div>
     );
   }
