@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
 import Name from './name';
+import FetchDemo from './fetchData';
 
 class Hello extends Component {
     constructor () {
@@ -21,7 +22,8 @@ class Hello extends Component {
                 id: 4,
                 image: 'http://i.imgur.com/tmVJtna.jpg'
             }],
-            isShow: 0
+            isShow: false,
+            roles: []
         }
         this.handleImageLoad = function( imageLocation, callback ) {
             this.loadCount++;
@@ -32,7 +34,6 @@ class Hello extends Component {
             return;
         }
     }
-
 
     componentWillMount = function () {
         var img;
@@ -52,6 +53,11 @@ class Hello extends Component {
         }
     }
 
+    componentDidMount = function () {
+        let db = new window.PouchDB('my-db');
+        db.put({_id: 'iiuu'});
+    }
+
   render() {
     let names = this.props.names.map(item => {
         return (
@@ -65,7 +71,7 @@ class Hello extends Component {
     });
 
     let settings = {
-      dots: true,
+      dots: false,
       infinite: false,
       speed: 500,
       autoplay: true,
@@ -75,6 +81,7 @@ class Hello extends Component {
     return (
         <div>
             {names}
+            <FetchDemo subreddit="reactjs"/>
             {this.state.isShow ? <div className="container">
                 <Slider {...settings}>
                     {slides}
